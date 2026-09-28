@@ -1,4 +1,4 @@
-# Nectar Chain — SIH 26021 Advanced Working Prototype v2.7.9
+# Nectar Chain — SIH 26021 Working Prototype v2.7.9
 
 Nectar Chain implements an **evidence-backed honey traceability and smart beekeeping workflow** for SIH 26021.
 
