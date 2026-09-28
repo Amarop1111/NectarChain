@@ -1,0 +1,3 @@
+# Optional image-CNN training/runtime. The core prototype does not require TensorFlow.
+# For best compatibility, use Python 3.11 or 3.12.
+tensorflow>=2.15

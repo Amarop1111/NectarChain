@@ -1,0 +1,4 @@
+batch_id,hive_id,sensor_weight_before_kg,sensor_weight_after_kg,harvest_delta_kg,avg_temperature_c,avg_humidity_pct,ai_hive_health_risk,ai_predicted_yield_kg,harvest_confidence,image_screen,validation_status,evidence_status
+HC-0001,HIVE-001,35.6,28.2,7.4,34.47,53.77,low,7.7,94%,low_visual_signal,APPROVED,COMPLETE
+HC-0002,HIVE-002,29.0,23.6,5.4,37.83,68.10,medium,8.7,54%,medium_visual_signal,PENDING_REVIEW,COMPLETE
+HC-0003,HIVE-003,33.2,26.4,6.8,34.67,54.90,low,6.9,93%,low_visual_signal,APPROVED,COMPLETE

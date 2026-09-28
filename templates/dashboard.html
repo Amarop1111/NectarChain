@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nectar Chain — Evidence-Backed Honey Traceability</title>
+  <link rel="stylesheet" href="/static/css/style.css?v=2.7.9">
+</head>
+<body>
+<div class="honey-grid"></div>
+<div class="ambient-scene" aria-hidden="true"><span class="ambient-orb orb-a"></span><span class="ambient-orb orb-b"></span><span class="ambient-orb orb-c"></span></div>
+<div class="cursor-glow" aria-hidden="true"></div>
+<nav class="topbar">
+  <div class="brand">
+    <div class="brand-mark">NC</div>
+    <div><strong>Nectar Chain</strong><span>Evidence-backed honey intelligence</span></div>
+  </div>
+  <div class="nav-links"><a href="#hives">Monitoring</a><a href="#events">Harvest events</a><a href="#ledger">Ledger</a><a href="#alerts">Alerts</a></div>
+</nav>
+
+<header class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow"><span class="eyebrow-dot"></span> VERIFY-THEN-COMMIT · EVIDENCE FIRST</div>
+    <h1>Trust every jar<br><span>from hive to shelf.</span></h1>
+    <p>Weight detects the harvest event. Environmental + visual evidence support AI validation. Only approved evidence is committed to the tamper-evident hash-chain and issued a QR.</p>
+    <div class="hero-meta"><span>● Live sensor network</span><span>✦ AI-assisted validation</span><span>⌁ Tamper-evident ledger</span></div>
+  </div>
+  <div class="hero-callout">
+    <div class="callout-icon">✓</div>
+    <div><b>Evidence gate active</b><br>Sensor evidence + AI-assisted validation must pass before ledger commit.</div>
+  </div>
+</header>
+
+<section class="stats">
+  <div class="stat"><span id="stat-hives">0</span><small>Registered hives</small></div>
+  <div class="stat"><span id="stat-batches">0</span><small>Committed batches</small></div>
+  <div class="stat"><span id="stat-readings">0</span><small>IoT readings</small></div>
+  <div class="stat"><span id="stat-review">0</span><small>Manual reviews</small></div>
+  <div class="stat"><span id="stat-alerts">0</span><small>Active health warnings</small></div>
+  <div class="stat"><span id="stat-chain">—</span><small>Chain integrity</small></div>
+</section>
+
+<section class="story-band" aria-label="Nectar Chain operating principle">
+  <div class="story-index">01 <span>/</span> 03</div>
+  <div class="story-copy"><div class="story-kicker">A quieter way to build trust</div><h2>Every harvest has a story.<br><em>We keep the evidence.</em></h2></div>
+  <div class="story-notes"><p>From the first weight change to the final QR scan, Nectar Chain turns field activity into a traceable record people can understand.</p><a href="#ledger">Explore the ledger <span>↗</span></a></div>
+</section>
+
+<main>
+  <section class="panel" id="hives">
+    <div class="panel-head">
+      <div><div class="kicker">01 · IOT + AI HEALTH</div><h2>Hive monitoring</h2></div>
+      <div class="panel-actions"><span id="refresh-status" class="refresh-status">Ready</span><button type="button" class="btn secondary" id="refresh" data-action-id="dashboard-refresh">Refresh</button></div>
+    </div>
+    <p class="sub">Weight triggers harvest detection. Temperature, humidity, weight trends and visual screening contribute to an AI-assisted hive-health risk signal.</p>
+    <form id="register-hive-form" class="register-grid" autocomplete="off" novalidate>
+      <label>Hive ID<input id="hive_id" name="hive_id" placeholder="HIVE-004" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="64" required></label>
+      <label>Beekeeper<input id="beekeeper_name" name="beekeeper_name" placeholder="Beekeeper name" autocomplete="off" maxlength="120" required></label>
+      <label>Apiary<input id="apiary_name" name="apiary_name" placeholder="Apiary name" autocomplete="off" maxlength="120" required></label>
+      <label>Region<input id="region" name="region" placeholder="Region" autocomplete="off" maxlength="120" required></label>
+      <label>Floral source<input id="floral_source" name="floral_source" placeholder="Floral source" autocomplete="off" maxlength="120" required></label>
+      <button type="submit" class="btn primary" id="register-hive">Register hive</button>
+    </form>
+    <div id="registration-preview" class="registration-preview" role="status" aria-live="polite" hidden></div>
+    <div id="hive-list" class="hive-list"></div>
+  </section>
+
+  <section class="panel" id="events">
+    <div class="panel-head">
+      <div><div class="kicker">02 · HARVEST VALIDATION</div><h2>Harvest events</h2></div>
+      <div class="demo-harvest-controls"><label class="demo-harvest-select-label" for="demo-harvest-hive">Demo hive<select id="demo-harvest-hive"></select></label><button class="btn secondary" id="demo-harvest">Run demo harvest</button></div>
+    </div>
+    <p class="sub">A weight drop of at least <strong>{{ harvest_drop_kg }} kg</strong> creates a candidate event. AI then checks harvest consistency, hive-health risk and expected yield.</p>
+    <div class="demo-flow">
+      <span>Weight trigger</span><b>→</b><span>Context + images</span><b>→</b><span>AI validation</span><b>→</b><span>Approve / Review</span>
+    </div>
+    <div class="mini-explain">
+      <div><b>Harvest proof</b><span>Before + after camera evidence can be linked to the event.</span></div>
+      <div><b>Health warning</b><span>Visual screening is supplementary; suspected disease still requires inspection/confirmation.</span></div>
+    </div>
+    <div id="event-log" class="event-log"></div>
+  </section>
+
+  <section class="panel wide" id="ledger">
+    <div class="panel-head">
+      <div><div class="kicker">03 · VERIFY-THEN-COMMIT</div><h2>Batch ledger</h2></div>
+      <div class="panel-actions"><button class="btn secondary" id="verify-chain" data-action-id="verify-chain">Verify full chain</button><button class="btn secondary" id="seed-demo" data-action-id="demo-seed">Reload demo data</button></div>
+    </div>
+    <p class="sub">Approved batches receive a committed record hash. Detailed sensor and image evidence stay off-chain; their evidence bundle hash is linked into the committed record.</p>
+    <div id="ledger-list" class="ledger-list"></div>
+  </section>
+
+  <section class="panel wide" id="alerts">
+    <div class="panel-head"><div><div class="kicker">04 · EARLY WARNING</div><h2>Hive-health alerts</h2></div><button class="btn secondary" id="refresh-alerts" data-action-id="alerts-refresh">Refresh alerts</button></div>
+    <p class="sub">Early warnings are screening signals for beekeeper intervention, not definitive veterinary diagnoses.</p>
+    <div id="health-alert-list" class="alert-list"></div>
+  </section>
+</main>
+
+<footer>Prototype scope: evidence-gated SQLite hash-chain + synthetic IoT + baseline AI + synthetic camera evidence. Production scale-up: calibrated field models, authenticated institutional identities and permissioned multi-organization blockchain.</footer>
+<script src="/static/js/app.js?v=2.7.9"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+hive_id,beekeeper_name,apiary_name,region,floral_source,baseline_health_risk
+HIVE-001,Ramesh Kumar,Nilgiris Hill Apiary,"Nilgiris, Tamil Nadu",Eucalyptus,LOW
+HIVE-002,Meena Devi,Western Ghats Apiary,"Kanyakumari, Tamil Nadu",Wildflower,MEDIUM
+HIVE-003,Arun Raj,Foothill Apiary,"Idukki, Kerala",Rubber,LOW

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nectar Chain — Verify {{ batch.batch_id }}</title>
+  <link rel="stylesheet" href="/static/css/style.css?v=2.7.9">
+</head>
+<body class="consumer-body">
+<div class="honey-grid"></div>
+<nav class="topbar">
+  <div class="brand"><div class="brand-mark">🍯</div><div><strong>Nectar Chain</strong><span>Consumer verification · SIH 26021</span></div></div>
+  <div class="nav-links"><a href="/">Operator dashboard</a></div>
+</nav>
+<main class="consumer-main">
+  <section class="consumer-card">
+    {% if batch.validation_status == 'REJECTED' %}
+      <div class="verify-banner fail"><span>×</span><div><strong>Batch rejected — not committed</strong><small>No trusted ledger record or QR was generated for this candidate.</small></div></div>
+    {% elif verification and verification.verified %}
+      <div class="verify-banner pass"><span>✓</span><div><strong>Integrity Verified — evidence intact</strong><small>Committed record, evidence bundle, hash-chain and custody trail all match.</small></div></div>
+    {% elif verification %}
+      <div class="verify-banner fail"><span>!</span><div><strong>Integrity Check Failed</strong><small>The current data or linked evidence no longer matches the committed record.</small></div></div>
+    {% else %}
+      <div class="verify-banner review"><span>…</span><div><strong>Verification Pending</strong><small>This batch has not been committed to the ledger yet.</small></div></div>
+    {% endif %}
+
+    <div class="product-head"><div><div class="kicker">HONEY BATCH</div><h1>{{ batch.batch_id }}</h1><p>From <strong>{{ batch.apiary_name }}</strong> · {{ batch.region }}</p></div><div class="trust-chip"><b>{{ batch.evidence_completeness }}%</b><span>Evidence completeness</span></div></div>
+
+    <div class="journey">
+      {% for h in batch.stage_history %}<div class="journey-step done"><span>✓</span><small>{{ h.stage }}</small><em>{{ h.timestamp.replace("T"," ")[:16] }}</em></div>{% endfor %}
+    </div>
+
+    <div class="consumer-grid">
+      <div>
+        <h3>Batch information</h3>
+        <table class="detail-table">
+          <tr><th>Beekeeper</th><td>{{ batch.beekeeper_name }}</td></tr>
+          <tr><th>Hive ID</th><td>{{ batch.hive_id }}</td></tr>
+          <tr><th>Harvest date</th><td>{{ batch.harvest_date }}</td></tr>
+          <tr><th>Floral source</th><td>{{ batch.floral_source }}</td></tr>
+          <tr><th>Harvest quantity</th><td>{{ batch.quantity_kg }} kg</td></tr>
+          <tr><th>Current stage</th><td>{{ batch.stage }}</td></tr>
+        </table>
+      </div>
+      <div class="qr-card">
+        {% if batch.qr_url %}
+          <img src="{{ batch.qr_url }}" alt="QR code for {{ batch.batch_id }}" class="qr-large">
+          <div><b>Batch QR</b><small>Encodes the verification page, not the full evidence bundle.</small></div>
+        {% else %}
+          <div class="qr-pending"><b>No QR generated</b><small>Only approved, evidence-complete batches receive a QR.</small></div>
+        {% endif %}
+      </div>
+    </div>
+
+    <section class="evidence-box">
+      <div><div class="kicker">EVIDENCE CHECK</div><h3>What Nectar Chain verified</h3></div>
+      <div class="evidence-grid">
+        <div><span>Sensor weight before</span><b>{{ batch.sensor_weight_before }} kg</b></div>
+        <div><span>Sensor weight after</span><b>{{ batch.sensor_weight_after }} kg</b></div>
+        <div><span>Harvest delta</span><b>{{ batch.harvest_delta_kg }} kg</b></div>
+        <div><span>Avg. temperature</span><b>{{ batch.avg_temperature or '—' }} °C</b></div>
+        <div><span>Avg. humidity</span><b>{{ batch.avg_humidity or '—' }} %</b></div>
+        <div><span>Predicted yield</span><b>{{ batch.ai_predicted_yield_kg or '—' }} kg</b></div>
+        <div><span>Hive-health risk</span><b class="risk-{{ batch.ai_disease_risk }}">{{ (batch.ai_disease_risk or 'N/A')|upper }}</b></div>
+        <div><span>Harvest confidence</span><b>{{ ((batch.harvest_confidence or 0) * 100)|round(0) if batch.harvest_confidence else '—' }}%</b></div>
+        <div><span>Evidence status</span><b>{{ (batch.evidence_status or 'SENSOR_ONLY')|replace('_',' ') }}</b></div>
+      </div>
+      {% if batch.health_warning %}<div class="health-note">⚠ {{ batch.health_warning }}</div>{% endif %}
+    </section>
+
+    {% if batch.evidence_items %}
+    <section class="camera-evidence">
+      <div><div class="kicker">CAMERA EVIDENCE</div><h3>Linked visual evidence</h3><p class="muted">Each image is stored off-chain and its SHA-256 digest is part of the committed evidence bundle.</p></div>
+      <div class="camera-grid">
+        {% for item in batch.evidence_items %}
+          <figure class="camera-card">
+            <img src="{{ item.url }}" alt="{{ item.evidence_type }}">
+            <figcaption><b>{{ item.evidence_type|replace('_',' ')|title }}</b><small>{{ item.source }} · {{ item.captured_at.replace('T',' ')[:16] }}</small><code>{{ item.sha256[:20] }}…</code></figcaption>
+          </figure>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    {% if batch.record_hash %}
+    <details class="crypto-details"><summary>Cryptographic verification</summary>
+      <p><strong>Stored record hash</strong><code>{{ batch.record_hash }}</code></p>
+      <p><strong>Previous hash</strong><code>{{ batch.prev_hash or 'GENESIS RECORD' }}</code></p>
+      <p><strong>Committed evidence bundle hash</strong><code>{{ batch.evidence_hash }}</code></p>
+      <p><strong>Current evidence bundle hash</strong><code>{{ batch.live_evidence_hash }}</code></p>
+    </details>
+    {% endif %}
+    <p class="consumer-note">Nectar Chain is a prototype hash-chain trust layer. AI outputs are screening/decision-support signals; laboratory confirmation remains complementary for real disease or product-authenticity decisions.</p>
+  </section>
+</main>
+</body>
+</html>
